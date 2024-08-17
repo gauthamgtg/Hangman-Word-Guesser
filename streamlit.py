@@ -99,8 +99,6 @@ with col1:
                 )
             ]
             st.session_state.selected_word = ""
-            # Clear selected word from URL
-            st.experimental_set_query_params(word=None)
 
 with col2:
     if st.button("Reset"):
@@ -108,41 +106,17 @@ with col2:
         st.session_state.excluded_letters = []
         st.session_state.possible_words = []
         st.session_state.selected_word = ""
-        # Clear selected word from URL
-        st.experimental_set_query_params(word=None)
 
-# Display possible words as pill boxes with hyperlinks
+# Display possible words as pill boxes with links
 if st.session_state.possible_words:
-    st.markdown("<h4 style='color: #28a745;'>Possible words:</h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='color: #28a745;'>Possible words: <span style='color: #FF5733;'>Click the word to see the word details</span></h4>", unsafe_allow_html=True)
     cols = st.columns(len(st.session_state.possible_words))
     for i, word in enumerate(st.session_state.possible_words):
         with cols[i]:
-            st.markdown(f"""
-            <a href="javascript:void(0);" onclick="document.getElementById('word-details').innerHTML = `<h3>Details for the word '{word}':</h3>`; window.parent.postMessage({{ type: 'selected_word', word: '{word}' }}, '*');">
-                <span style='display: inline-block; background-color: #FF5733; padding: 5px 15px; margin: 5px; border-radius: 15px; color: white;'>{word}</span>
-            </a>""", unsafe_allow_html=True)
+            if st.button(word, key=f"word_{i}"):
+                st.session_state.selected_word = word
 
-# JavaScript to handle the pill clicks and update the content
-st.markdown("""
-<script>
-window.addEventListener('message', function(event) {
-    if (event.data.type === 'selected_word') {
-        const word = event.data.word;
-        document.getElementById('word-details').innerHTML = '<h3>Details for the word "' + word + '":</h3>';
-        window.location.hash = '#word-details';
-    }
-});
-</script>
-""", unsafe_allow_html=True)
-
-# Container for word details
-st.markdown('<div id="word-details"></div>', unsafe_allow_html=True)
-
-# Show word details if a word is selected
-selected_word_param = st.experimental_get_query_params().get('word')
-if selected_word_param:
-    st.session_state.selected_word = selected_word_param[0]
-
+# Display word details for the selected word
 if st.session_state.selected_word:
     st.markdown(f"### Details for the word '{st.session_state.selected_word}':")
     
