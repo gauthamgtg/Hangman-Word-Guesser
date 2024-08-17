@@ -1,80 +1,66 @@
 import streamlit as st
-import nltk
 from english_words import get_english_words_set
+from PIL import Image
 
-# Download NLTK resources if not already downloaded
-nltk.download('words')
+# Set page configuration and title
+st.set_page_config(page_title="Hangman Word Guesser", layout="centered")
+st.markdown("<h1 style='text-align: center; color: #FF5733;'>Hangman Word Guesser</h1>", unsafe_allow_html=True)
 
-# Load the word list from NLTK and the english_words library
+# Display social links with icons
+st.markdown("""
+<div style='text-align: center;'>
+    <a href='https://github.com/gauthamgtg' target='_blank'>
+        <img src='https://image.flaticon.com/icons/png/512/25/25231.png' width='40' style='margin: 0 15px;'>
+    </a>
+    <a href='https://gauthamgtg.github.io/portfolio/' target='_blank'>
+        <img src='https://image.flaticon.com/icons/png/512/1006/1006771.png' width='40' style='margin: 0 15px;'>
+    </a>
+    <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank'>
+        <img src='https://image.flaticon.com/icons/png/512/174/174857.png' width='40' style='margin: 0 15px;'>
+    </a>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("<h3 style='text-align: center; color: #FF5733;'>This app was built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
+
+# Initialize word set
 web2lowerset = get_english_words_set(['web2'], lower=True)
-nltk_words = set(nltk.corpus.words.words())
-all_words = list(web2lowerset.union(nltk_words))
 
-# Word completion model
-class WordCompletionModel:
-    def __init__(self, all_words):
-        self.word_list = list(set(all_words))
-
-    def complete_word(self, incomplete_word, excluded_letters):
-        possible_words = []
-        for word in self.word_list:
-            if self.matches_pattern(word, incomplete_word) and not self.contains_excluded_letters(word, excluded_letters):
-                possible_words.append(word)
-        return possible_words
-
-    def matches_pattern(self, word, pattern):
-        if len(word) != len(pattern):
+# Function to display error if excluded letter is in the word
+def validate_excluded_letters(included_letters, excluded_letters):
+    for letter in excluded_letters:
+        if letter in included_letters:
+            st.error(f"The letter '{letter}' is already used in the word. Please remove it from the excluded letters.")
             return False
-        for i in range(len(word)):
-            if pattern[i] != '_' and pattern[i] != word[i]:
-                return False
-        return True
+    return True
 
-    def contains_excluded_letters(self, word, excluded_letters):
-        for letter in excluded_letters:
-            if letter in word:
-                return True
-        return False
+# Slider to choose word length
+word_length = st.slider("How many characters does the word have?", 2, 28, 5)
 
-# Streamlit Interface
-st.title("Hangman Word Guesser")
-
-# Reset session state
-if st.button("Reset"):
-    for key in st.session_state.keys():
-        del st.session_state[key]
-    st.experimental_rerun()  # New way to rerun after clearing session state
-
-# Slider to choose the number of characters (2 to 28)
-num_characters = st.slider("Select the number of characters in the word:", min_value=2, max_value=28)
-
-# Display input boxes based on the number of characters
-placeholders = []
-for i in range(num_characters):
-    placeholders.append(st.text_input(f"Character {i + 1}", key=f"char_{i}"))
+# Display input boxes side by side
+st.markdown("<h4 style='color: #33CFFF;'>Enter the known letters below:</h4>", unsafe_allow_html=True)
+cols = st.columns(word_length)
+letter_inputs = [cols[i].text_input(f"Letter {i+1}", "", max_chars=1, key=f"letter_{i}") for i in range(word_length)]
 
 # User input for excluded letters
-excluded_letters = st.text_input("Enter letters that are not in the word:")
+st.markdown("<h4 style='color: #33CFFF;'>Enter letters that are not in the word:</h4>", unsafe_allow_html=True)
+excluded_letters = st.text_input("Excluded letters (separated by commas):").replace(" ", "").lower().split(",")
 
-# Validate if any excluded letters are already used in the word
-if st.button("Check Word"):
-    entered_word = "".join([char if char != "" else "_" for char in placeholders]).lower()
-    excluded_set = set(excluded_letters.lower())
-    duplicate_error = False
-    for char in entered_word:
-        if char in excluded_set:
-            duplicate_error = True
-            break
-
-    if duplicate_error:
-        st.error("Error: You have entered a letter in the excluded list that is already used in the word!")
-    else:
-        # Run the model to find possible completions
-        model = WordCompletionModel(all_words)
-        possible_words = model.complete_word(entered_word, excluded_set)
+# Check function
+if st.button("Check"):
+    if validate_excluded_letters(letter_inputs, excluded_letters):
+        pattern = "".join([letter if letter else "_" for letter in letter_inputs])
+        # Word guessing logic
+        possible_words = [word for word in web2lowerset if len(word) == word_length and all(
+            (c1 == c2 or c2 == "_") and c1 not in excluded_letters for c1, c2 in zip(word, pattern)
+        )]
 
         if possible_words:
-            st.write("Possible words:")
+            st.markdown("<h4 style='color: #28a745;'>Possible words:</h4>", unsafe_allow_html=True)
             st.write(possible_words)
         else:
-            st.write("No possible words found for your input.")
+            st.markdown("<h4 style='color: #dc3545;'>No possible words found for your input.</h4>", unsafe_allow_html=True)
+
+# Reset button to clear inputs
+if st.button("Reset"):
+    st.experimental_rerun()
