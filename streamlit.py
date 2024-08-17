@@ -19,8 +19,7 @@ with st.sidebar:
     st.image(ai_image_url, caption="AI-Powered Word Guesser", use_column_width=True)
     
     # App description
-    st.write("This Hangman Word Guesser helps you find possible words based on known and excluded letters, along with word details such as 
-    meanings, antonyms, and translations. It's a useful tool for word games and language learning.")
+    st.write("This Hangman Word Guesser helps you find possible words based on known and excluded letters, along with word details such as meanings, antonyms, and translations. It's a useful tool for word games and language learning.")
     
     # Credits
     st.markdown("<h3 style='color: #FF5733;'>Built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
