@@ -2,3 +2,4 @@ pdfplumber
 nltk
 streamlit
 english-words
+PyDictionary
