@@ -12,10 +12,10 @@ st.markdown("""
         <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='40' style='margin: 0 15px;'>
     </a>
     <a href='https://gauthamgtg.github.io/portfolio/' target='_blank'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/6/62/Portfolio%28light%29.svg' width='40' style='margin: 0 15px;'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/2/24/Font_Awesome_5_solid_project_diagram.svg' width='40' style='margin: 0 15px;'>
     </a>
     <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/0/01/LinkedIn_Logo_2019.svg' width='40' style='margin: 0 15px;'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/c/c9/LinkedIn_logo_initials.png' width='40' style='margin: 0 15px;'>
     </a>
 </div>
 """, unsafe_allow_html=True)
@@ -43,6 +43,10 @@ if 'letter_inputs' not in st.session_state:
     st.session_state.letter_inputs = [""] * word_length
 if 'excluded_letters' not in st.session_state:
     st.session_state.excluded_letters = []
+
+# Update session state if word length changes
+if len(st.session_state.letter_inputs) != word_length:
+    st.session_state.letter_inputs = [""] * word_length
 
 # Display input boxes side by side
 st.markdown("<h4 style='color: #33CFFF;'>Enter the known letters below:</h4>", unsafe_allow_html=True)
