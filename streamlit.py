@@ -1,20 +1,30 @@
 import streamlit as st
 import nltk
-import pickle
+from nltk.tokenize import word_tokenize
+from english_words import get_english_words_set
 
 # Download NLTK resources if not already downloaded
+nltk.download('punkt')
 nltk.download('words')
 
-# Load the pre-processed word list
-@st.cache_data
-def load_word_list():
-    with open('word_list.pkl', 'rb') as f:
-        return pickle.load(f)
+# Function to get the word list
+def get_word_list():
+    # Get words from the english_words library
+    web2_words = get_english_words_set(['web2'], lower=True)
+    
+    # Get NLTK words
+    nltk_words = set(nltk.corpus.words.words())
+    
+    # Combine and remove duplicates
+    combined_words = list(web2_words.union(nltk_words))
+    
+    return combined_words
 
 # Word completion model
 class WordCompletionModel:
-    def __init__(self, word_list):
-        self.word_list = word_list
+    def __init__(self, all_words):
+        # Load and merge words
+        self.word_list = list(set(all_words))
 
     def complete_word(self, incomplete_word, excluded_letters):
         possible_words = []
@@ -40,8 +50,8 @@ class WordCompletionModel:
 # Streamlit Interface
 st.title("Word Completion App")
 
-# Load the pre-processed word list
-all_words = load_word_list()
+# Load the word list
+all_words = get_word_list()
 
 # User input for the word with missing letters
 incomplete_word = st.text_input("Enter a word with missing letters (use '_' for missing letters):")
@@ -58,3 +68,5 @@ if incomplete_word:
         st.write(possible_words)
     else:
         st.write("No possible words found for your input.")
+else:
+    st.write("Enter a word pattern to get suggestions.")
