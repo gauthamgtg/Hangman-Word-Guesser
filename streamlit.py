@@ -69,6 +69,8 @@ if 'letter_inputs' not in st.session_state:
     st.session_state.letter_inputs = [""] * word_length
 if 'excluded_letters' not in st.session_state:
     st.session_state.excluded_letters = []
+if 'possible_words' not in st.session_state:
+    st.session_state.possible_words = []
 if 'selected_word' not in st.session_state:
     st.session_state.selected_word = ""
 if 'show_word_details' not in st.session_state:
@@ -98,15 +100,15 @@ with col1:
         if validate_excluded_letters(st.session_state.letter_inputs, st.session_state.excluded_letters):
             pattern = "".join([letter if letter else "_" for letter in st.session_state.letter_inputs])
             # Word guessing logic
-            possible_words = [word for word in web2lowerset if len(word) == word_length and all(
+            st.session_state.possible_words = [word for word in web2lowerset if len(word) == word_length and all(
                 (c1 == c2 or c2 == "_") and c1 not in st.session_state.excluded_letters for c1, c2 in zip(word, pattern)
             )]
 
-            if possible_words:
+            if st.session_state.possible_words:
                 st.markdown("<h4 style='color: #28a745;'>Possible words:</h4>", unsafe_allow_html=True)
-                st.write(possible_words)
+                st.write(st.session_state.possible_words)
                 # Let the user select a word from the possible words
-                st.session_state.selected_word = st.selectbox("Select a word for details:", possible_words)
+                st.session_state.selected_word = st.selectbox("Select a word for details:", st.session_state.possible_words, key='word_selection')
                 st.session_state.show_word_details = False  # Reset the details view until user clicks the button
             else:
                 st.markdown("<h4 style='color: #dc3545;'>No possible words found for your input.</h4>", unsafe_allow_html=True)
@@ -116,11 +118,12 @@ with col2:
         st.session_state.letter_inputs = [""] * word_length
         st.session_state.excluded_letters = []
         st.session_state.selected_word = ""
+        st.session_state.possible_words = []
         st.session_state.show_word_details = False
         st.experimental_set_query_params()  # Reset query parameters
 
 # Button to show details of the selected word
-if st.session_state.selected_word:
+if st.session_state.selected_word and st.session_state.possible_words:
     if st.button("Show Word Details"):
         st.session_state.show_word_details = True
 
