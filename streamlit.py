@@ -24,22 +24,22 @@ with st.sidebar:
     # Credits
     st.markdown("<h3 style='color: #FF5733;'>Built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
     
-    # Social links with separate lines and text
-    st.write("GitHub:")
+    # Social links with text and icons side by side
+    st.write("GitHub: ", unsafe_allow_html=True)
     st.markdown("""
     <a href='https://github.com/gauthamgtg' target='_blank'>
         <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='30' alt='GitHub'>
     </a>
     """, unsafe_allow_html=True)
     
-    st.write("Portfolio:")
+    st.write("Portfolio: ", unsafe_allow_html=True)
     st.markdown("""
     <a href='https://gauthamgtg.github.io/portfolio/' target='_blank'>
         <img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Deepin_Icon_Theme_%E2%80%93_dde-file-manager_%284%29.svg' width='30' alt='Projects'>
     </a>
     """, unsafe_allow_html=True)
     
-    st.write("Follow on LinkedIn:")
+    st.write("For suggestions and feedback hit me up on LinkedIn: ", unsafe_allow_html=True)
     st.markdown("""
     <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank'>
         <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='30' alt='LinkedIn'>
@@ -107,14 +107,20 @@ with col2:
         st.session_state.possible_words = []
         st.session_state.selected_word = ""
 
-# Display possible words as pill boxes with buttons
+# Display possible words as pill boxes with hyperlinks
 if st.session_state.possible_words:
     st.markdown("<h4 style='color: #28a745;'>Possible words:</h4>", unsafe_allow_html=True)
-    for word in st.session_state.possible_words:
-        if st.button(word, key=word):
-            st.session_state.selected_word = word
+    cols = st.columns(len(st.session_state.possible_words))
+    for i, word in enumerate(st.session_state.possible_words):
+        with cols[i]:
+            st.markdown(f"<a href='?word={word}'><span style='display: inline-block; background-color: #FF5733; padding: 5px 15px; margin: 5px; border-radius: 15px; color: white;'>{word}</span></a>", unsafe_allow_html=True)
 
-    # Show word details when a word is selected
+    # When a word is clicked, set it as the selected word
+    selected_word_param = st.experimental_get_query_params().get('word')
+    if selected_word_param:
+        st.session_state.selected_word = selected_word_param[0]
+
+    # Show word details when a word is clicked
     if st.session_state.selected_word:
         st.markdown(f"### Details for the word '{st.session_state.selected_word}':")
         
