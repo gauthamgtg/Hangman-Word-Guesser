@@ -1,6 +1,5 @@
 import streamlit as st
 from english_words import get_english_words_set
-from PIL import Image
 
 # Set page configuration and title
 st.set_page_config(page_title="Hangman Word Guesser", layout="centered")
@@ -28,6 +27,8 @@ web2lowerset = get_english_words_set(['web2'], lower=True)
 
 # Function to display error if excluded letter is in the word
 def validate_excluded_letters(included_letters, excluded_letters):
+    if not excluded_letters:
+        return True
     for letter in excluded_letters:
         if letter in included_letters:
             st.error(f"The letter '{letter}' is already used in the word. Please remove it from the excluded letters.")
@@ -44,7 +45,8 @@ letter_inputs = [cols[i].text_input(f"Letter {i+1}", "", max_chars=1, key=f"lett
 
 # User input for excluded letters
 st.markdown("<h4 style='color: #33CFFF;'>Enter letters that are not in the word:</h4>", unsafe_allow_html=True)
-excluded_letters = st.text_input("Excluded letters (separated by commas):").replace(" ", "").lower().split(",")
+excluded_letters_input = st.text_input("Excluded letters (separated by commas):").replace(" ", "").lower()
+excluded_letters = [letter for letter in excluded_letters_input if letter.isalpha()]
 
 # Check function
 if st.button("Check"):
