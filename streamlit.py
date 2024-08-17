@@ -42,8 +42,8 @@ if 'excluded_letters' not in st.session_state:
     st.session_state.excluded_letters = []
 if 'possible_words' not in st.session_state:
     st.session_state.possible_words = []
-if 'show_details' not in st.session_state:
-    st.session_state.show_details = False
+if 'selected_word' not in st.session_state:
+    st.session_state.selected_word = ""
 
 # Update session state if word length changes
 if len(st.session_state.letter_inputs) != word_length:
@@ -71,33 +71,34 @@ with col1:
                     (c1 == c2 or c2 == "_") and c1 not in st.session_state.excluded_letters for c1, c2 in zip(word, pattern)
                 )
             ]
-            st.session_state.show_details = False
+            st.session_state.selected_word = ""
 
 with col2:
     if st.button("Reset"):
         st.session_state.letter_inputs = [""] * word_length
         st.session_state.excluded_letters = []
         st.session_state.possible_words = []
-        st.session_state.show_details = False
+        st.session_state.selected_word = ""
 
-# Display possible words
+# Display possible words as pill boxes with hyperlinks
 if st.session_state.possible_words:
     st.markdown("<h4 style='color: #28a745;'>Possible words:</h4>", unsafe_allow_html=True)
-    st.write(", ".join(st.session_state.possible_words))
-
-    # Button to show word details
-    if st.button("Show Word Details"):
-        st.session_state.show_details = True
-
-# Display word details in a popup-like section
-if st.session_state.show_details:
-    st.markdown("<h4 style='color: #FF5733;'>Word Details:</h4>", unsafe_allow_html=True)
-    
+    word_pills = ""
     for word in st.session_state.possible_words:
-        st.markdown(f"#### Details for '{word}':")
+        word_pills += f"<a href='#{word}'><span style='display: inline-block; background-color: #FF5733; padding: 5px 15px; margin: 5px; border-radius: 15px; color: white;'>{word}</span></a> "
+    st.markdown(word_pills, unsafe_allow_html=True)
+
+    # When a word is clicked, set it as the selected word
+    selected_word_param = st.experimental_get_query_params().get('word')
+    if selected_word_param:
+        st.session_state.selected_word = selected_word_param[0]
+
+    # Show word details when a word is clicked
+    if st.session_state.selected_word:
+        st.markdown(f"### Details for the word '{st.session_state.selected_word}':")
         
         # Get and display meaning
-        meaning = dictionary.meaning(word)
+        meaning = dictionary.meaning(st.session_state.selected_word)
         if meaning:
             st.write("**Meaning:**")
             for part_of_speech, definitions in meaning.items():
@@ -108,7 +109,7 @@ if st.session_state.show_details:
             st.write("No meaning found.")
         
         # Get and display antonyms
-        antonyms = dictionary.antonym(word)
+        antonyms = dictionary.antonym(st.session_state.selected_word)
         if antonyms:
             st.write("**Opposites (Antonyms):**")
             st.write(", ".join(antonyms))
@@ -117,9 +118,9 @@ if st.session_state.show_details:
         
         # Get and display translation
         st.write("**Translation:**")
-        target_language = st.selectbox(f"Select target language for '{word}':", [
+        target_language = st.selectbox("Select target language:", [
             'French', 'German', 'Italian', 'Spanish', 'Portuguese', 'Dutch', 'Chinese', 'Japanese', 'Korean', 'Russian', 'Arabic'
-        ], key=f"lang_{word}")
+        ])
         
         language_codes = {
             'French': 'fr',
@@ -136,7 +137,7 @@ if st.session_state.show_details:
         }
         
         if target_language:
-            translation = dictionary.translate(word, language_codes[target_language])
+            translation = dictionary.translate(st.session_state.selected_word, language_codes[target_language])
             if translation:
                 st.write(f"**{target_language} Translation:** {translation}")
             else:
