@@ -24,7 +24,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown("<h3 style='text-align: center; color: #FF5733;'>This app was built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
+st.markdown("<h6 style='text-align: center; color: #FF5733;'>This app was built by Gautham Mahadevan</h6>", unsafe_allow_html=True)
 
 # Initialize word set
 web2lowerset = get_english_words_set(['web2'], lower=True)
