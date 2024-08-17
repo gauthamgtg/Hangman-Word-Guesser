@@ -39,45 +39,42 @@ class WordCompletionModel:
 # Streamlit Interface
 st.title("Hangman Word Guesser")
 
-# Reset button to restart the app
-if "reset" not in st.session_state:
-    st.session_state.reset = False
-
+# Reset session state
 if st.button("Reset"):
-    st.session_state.reset = True
-    st.experimental_rerun()
+    for key in st.session_state.keys():
+        del st.session_state[key]
+    st.experimental_rerun()  # New way to rerun after clearing session state
 
 # Slider to choose the number of characters (2 to 28)
-if not st.session_state.reset:
-    num_characters = st.slider("Select the number of characters in the word:", min_value=2, max_value=28)
+num_characters = st.slider("Select the number of characters in the word:", min_value=2, max_value=28)
 
-    # Display input boxes based on the number of characters
-    placeholders = []
-    for i in range(num_characters):
-        placeholders.append(st.text_input(f"Character {i + 1}", key=f"char_{i}"))
+# Display input boxes based on the number of characters
+placeholders = []
+for i in range(num_characters):
+    placeholders.append(st.text_input(f"Character {i + 1}", key=f"char_{i}"))
 
-    # User input for excluded letters
-    excluded_letters = st.text_input("Enter letters that are not in the word:")
+# User input for excluded letters
+excluded_letters = st.text_input("Enter letters that are not in the word:")
 
-    # Validate if any excluded letters are already used in the word
-    if st.button("Check Word"):
-        entered_word = "".join([char if char != "" else "_" for char in placeholders]).lower()
-        excluded_set = set(excluded_letters.lower())
-        duplicate_error = False
-        for char in entered_word:
-            if char in excluded_set:
-                duplicate_error = True
-                break
+# Validate if any excluded letters are already used in the word
+if st.button("Check Word"):
+    entered_word = "".join([char if char != "" else "_" for char in placeholders]).lower()
+    excluded_set = set(excluded_letters.lower())
+    duplicate_error = False
+    for char in entered_word:
+        if char in excluded_set:
+            duplicate_error = True
+            break
 
-        if duplicate_error:
-            st.error("Error: You have entered a letter in the excluded list that is already used in the word!")
+    if duplicate_error:
+        st.error("Error: You have entered a letter in the excluded list that is already used in the word!")
+    else:
+        # Run the model to find possible completions
+        model = WordCompletionModel(all_words)
+        possible_words = model.complete_word(entered_word, excluded_set)
+
+        if possible_words:
+            st.write("Possible words:")
+            st.write(possible_words)
         else:
-            # Run the model to find possible completions
-            model = WordCompletionModel(all_words)
-            possible_words = model.complete_word(entered_word, excluded_set)
-
-            if possible_words:
-                st.write("Possible words:")
-                st.write(possible_words)
-            else:
-                st.write("No possible words found for your input.")
+            st.write("No possible words found for your input.")
