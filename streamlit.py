@@ -1,5 +1,9 @@
 import streamlit as st
 from english_words import get_english_words_set
+from PyDictionary import PyDictionary
+
+# Initialize PyDictionary
+dictionary = PyDictionary()
 
 # Set page configuration and title
 st.set_page_config(page_title="Hangman Word Guesser", layout="centered")
@@ -12,7 +16,7 @@ st.markdown("""
         <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='40' style='margin: 0 15px;' alt='GitHub'>
     </a>
     <a href='https://gauthamgtg.github.io/portfolio/' target='_blank'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Deepin_Icon_Theme_%E2%80%93_dde-file-manager_%284%29.svg' width='40' style='margin: 0 15px;' alt='Projects'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/8/8e/Forge_Noun_project_1044767.svg' width='40' style='margin: 0 15px;' alt='Projects'>
     </a>
     <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank'>
         <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='40' style='margin: 0 15px;' alt='LinkedIn'>
@@ -43,6 +47,8 @@ if 'letter_inputs' not in st.session_state:
     st.session_state.letter_inputs = [""] * word_length
 if 'excluded_letters' not in st.session_state:
     st.session_state.excluded_letters = []
+if 'selected_word' not in st.session_state:
+    st.session_state.selected_word = ""
 
 # Update session state if word length changes
 if len(st.session_state.letter_inputs) != word_length:
@@ -75,6 +81,8 @@ with col1:
             if possible_words:
                 st.markdown("<h4 style='color: #28a745;'>Possible words:</h4>", unsafe_allow_html=True)
                 st.write(possible_words)
+                # Let the user select a word from the possible words
+                st.session_state.selected_word = st.selectbox("Select a word for details:", possible_words)
             else:
                 st.markdown("<h4 style='color: #dc3545;'>No possible words found for your input.</h4>", unsafe_allow_html=True)
 
@@ -82,6 +90,56 @@ with col2:
     if st.button("Reset"):
         st.session_state.letter_inputs = [""] * word_length
         st.session_state.excluded_letters = []
-        st.session_state.word_length = word_length
-        # Clear all inputs manually
+        st.session_state.selected_word = ""
         st.experimental_set_query_params()  # Reset query parameters
+
+# Display details for the selected word
+if st.session_state.selected_word:
+    st.markdown(f"### Details for the word '{st.session_state.selected_word}':")
+    
+    # Get meaning
+    meaning = dictionary.meaning(st.session_state.selected_word)
+    if meaning:
+        st.write("**Meaning:**")
+        for part_of_speech, definitions in meaning.items():
+            st.write(f"**{part_of_speech.capitalize()}:**")
+            for definition in definitions:
+                st.write(f" - {definition}")
+    else:
+        st.write("No meaning found.")
+    
+    # Get opposites (antonyms)
+    antonyms = dictionary.antonym(st.session_state.selected_word)
+    if antonyms:
+        st.write("**Opposites (Antonyms):**")
+        st.write(", ".join(antonyms))
+    else:
+        st.write("No antonyms found.")
+    
+    # Translation
+    st.write("**Translation:**")
+    target_language = st.selectbox("Select target language:", [
+        'French', 'German', 'Italian', 'Spanish', 'Portuguese', 'Dutch', 'Chinese', 'Japanese', 'Korean', 'Russian', 'Arabic'
+    ])
+    
+    # Map languages to their codes
+    language_codes = {
+        'French': 'fr',
+        'German': 'de',
+        'Italian': 'it',
+        'Spanish': 'es',
+        'Portuguese': 'pt',
+        'Dutch': 'nl',
+        'Chinese': 'zh',
+        'Japanese': 'ja',
+        'Korean': 'ko',
+        'Russian': 'ru',
+        'Arabic': 'ar'
+    }
+    
+    if target_language:
+        translation = dictionary.translate(st.session_state.selected_word, language_codes[target_language])
+        if translation:
+            st.write(f"**{target_language} Translation:** {translation}")
+        else:
+            st.write("No translation found.")
