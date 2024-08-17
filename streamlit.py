@@ -12,7 +12,7 @@ st.markdown("""
         <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='40' style='margin: 0 15px;' alt='GitHub'>
     </a>
     <a href='https://gauthamgtg.github.io/portfolio/' target='_blank'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/8/8e/Forge_Noun_project_1044767.svg' width='40' style='margin: 0 15px;' alt='Projects'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Deepin_Icon_Theme_%E2%80%93_dde-file-manager_%284%29.svg' width='40' style='margin: 0 15px;' alt='Projects'>
     </a>
     <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank'>
         <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='40' style='margin: 0 15px;' alt='LinkedIn'>
@@ -54,7 +54,7 @@ cols = st.columns(word_length)
 for i in range(word_length):
     st.session_state.letter_inputs[i] = cols[i].text_input(
         f"Letter {i+1}", st.session_state.letter_inputs[i], max_chars=1, key=f"letter_{i}"
-    ).upper()  # Convert input to uppercase
+    ).lower()  # Convert input to lowercase
 
 # User input for excluded letters
 st.markdown("<h4 style='color: #33CFFF;'>Enter letters that are not in the word:</h4>", unsafe_allow_html=True)
@@ -69,7 +69,7 @@ with col1:
             pattern = "".join([letter if letter else "_" for letter in st.session_state.letter_inputs])
             # Word guessing logic
             possible_words = [word for word in web2lowerset if len(word) == word_length and all(
-                (c1.upper() == c2 or c2 == "_") and c1.upper() not in st.session_state.excluded_letters for c1, c2 in zip(word, pattern)
+                (c1 == c2 or c2 == "_") and c1 not in st.session_state.excluded_letters for c1, c2 in zip(word, pattern)
             )]
 
             if possible_words:
