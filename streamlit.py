@@ -1,6 +1,7 @@
 import streamlit as st
 from english_words import get_english_words_set
 from PyDictionary import PyDictionary
+from PIL import Image
 
 # Initialize PyDictionary
 dictionary = PyDictionary()
@@ -11,10 +12,20 @@ st.markdown("<h1 style='text-align: center; color: #FF5733;'>Hangman Word Guesse
 
 # Sidebar content
 with st.sidebar:
-    st.markdown("<h3 style='color: #FF5733;'>This app was built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
+    # Title in sidebar
+    st.markdown("<h2 style='color: #FF5733;'>Hangman Word Guesser</h2>", unsafe_allow_html=True)
+    
+    # Image related to AI and word generation
+    ai_image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Artificial_intelligence-icon.svg/1024px-Artificial_intelligence-icon.svg.png"
+    st.image(ai_image_url, caption="AI-Powered Word Guesser", use_column_width=True)
+    
+    # App description
     st.write("This Hangman Word Guesser helps you find possible words based on known and excluded letters, along with word details such as meanings, antonyms, and translations. It's a useful tool for word games and language learning.")
     
-    # Display social links with updated icons in the sidebar
+    # Built by Gautham Mahadevan
+    st.markdown("<h3 style='color: #FF5733;'>This app was built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
+    
+    # Social links with updated icons
     st.markdown("""
     <div style='text-align: left;'>
         <a href='https://github.com/gauthamgtg' target='_blank'>
@@ -28,6 +39,7 @@ with st.sidebar:
         </a>
     </div>
     """, unsafe_allow_html=True)
+
 
 # Main content
 # Initialize word set
