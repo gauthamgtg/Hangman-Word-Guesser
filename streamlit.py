@@ -19,27 +19,28 @@ with st.sidebar:
     st.image(ai_image_url, caption="AI-Powered Word Guesser", use_column_width=True)
     
     # App description
-    st.write("This Hangman Word Guesser helps you find possible words based on known and excluded letters, along with word details such as meanings, antonyms, and translations. It's a useful tool for word games and language learning.")
+    st.write("This Hangman Word Guesser helps you find possible words based on known and excluded letters, along with word details such as 
+    meanings, antonyms, and translations. It's a useful tool for word games and language learning.")
     
     # Credits
     st.markdown("<h3 style='color: #FF5733;'>Built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
     
     # Social links with text and icons side by side
-    st.write("GitHub: ", unsafe_allow_html=True)
+    st.write("GitHub:", unsafe_allow_html=True)
     st.markdown("""
     <a href='https://github.com/gauthamgtg' target='_blank'>
         <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='30' alt='GitHub'>
     </a>
     """, unsafe_allow_html=True)
     
-    st.write("Portfolio: ", unsafe_allow_html=True)
+    st.write("Portfolio:", unsafe_allow_html=True)
     st.markdown("""
     <a href='https://gauthamgtg.github.io/portfolio/' target='_blank'>
         <img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Deepin_Icon_Theme_%E2%80%93_dde-file-manager_%284%29.svg' width='30' alt='Projects'>
     </a>
     """, unsafe_allow_html=True)
     
-    st.write("For suggestions and feedback hit me up on LinkedIn: ", unsafe_allow_html=True)
+    st.write("For suggestions and feedbacks hit me up on LinkedIn: ", unsafe_allow_html=True)
     st.markdown("""
     <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank'>
         <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='30' alt='LinkedIn'>
@@ -109,7 +110,7 @@ with col2:
 
 # Display possible words as pill boxes with links
 if st.session_state.possible_words:
-    st.markdown("<h4 style='color: #28a745;'>Possible words: <span style='color: #FF5733;'>Click the word to see the word details</span></h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='color: #28a745;'>Possible words:</h4> <span style='color: #FF5733;'></h6>Click the word to see the word details</span></h6>", unsafe_allow_html=True)
     cols = st.columns(len(st.session_state.possible_words))
     for i, word in enumerate(st.session_state.possible_words):
         with cols[i]:
