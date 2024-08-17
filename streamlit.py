@@ -110,8 +110,9 @@ with col2:
 
 # Display possible words as pill boxes with links
 if st.session_state.possible_words:
-    st.markdown("<h4 style='color: #28a745;'>Possible words:</h4> <span style='color: #FF5733;'></h6>Click the word to see the word details</span></h6>", unsafe_allow_html=True)
-    cols = st.columns(len(st.session_state.possible_words))
+    st.markdown("<h4 style='color: #28a745;'>Possible words: <span style='color: #FF5733;'>Click the word to see the word details</span></h4>", unsafe_allow_html=True)
+    num_words = len(st.session_state.possible_words)
+    cols = st.columns(num_words)
     for i, word in enumerate(st.session_state.possible_words):
         with cols[i]:
             if st.button(word, key=f"word_{i}"):
