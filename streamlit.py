@@ -5,16 +5,15 @@ from english_words import get_english_words_set
 # Download NLTK resources if not already downloaded
 nltk.download('words')
 
-# Load the word list using `english_words` package
+# Load the word list from NLTK and the english_words library
 web2lowerset = get_english_words_set(['web2'], lower=True)
+nltk_words = set(nltk.corpus.words.words())
+all_words = list(web2lowerset.union(nltk_words))
 
 # Word completion model
 class WordCompletionModel:
-    def __init__(self):
-        # Load the NLTK word list and merge with words from `english_words` package
-        self.word_list = nltk.corpus.words.words() + list(web2lowerset)
-        # Remove duplicates
-        self.word_list = list(set(self.word_list))
+    def __init__(self, all_words):
+        self.word_list = list(set(all_words))
 
     def complete_word(self, incomplete_word, excluded_letters):
         possible_words = []
@@ -38,32 +37,47 @@ class WordCompletionModel:
         return False
 
 # Streamlit Interface
-st.title("Word Completion App")
+st.title("Hangman Word Guesser")
 
-# Ask how many characters the word has
-word_length = st.number_input("How many characters does the word have?", min_value=1, step=1)
+# Reset button to restart the app
+if "reset" not in st.session_state:
+    st.session_state.reset = False
 
-if word_length:
-    # Display input boxes for the user to enter characters
-    incomplete_word = ""
-    cols = st.columns(word_length)
-    for i in range(word_length):
-        char = cols[i].text_input(f"Letter {i+1}:", max_chars=1)
-        incomplete_word += char if char else "_"
+if st.button("Reset"):
+    st.session_state.reset = True
+    st.experimental_rerun()
+
+# Slider to choose the number of characters (2 to 28)
+if not st.session_state.reset:
+    num_characters = st.slider("Select the number of characters in the word:", min_value=2, max_value=28)
+
+    # Display input boxes based on the number of characters
+    placeholders = []
+    for i in range(num_characters):
+        placeholders.append(st.text_input(f"Character {i + 1}", key=f"char_{i}"))
 
     # User input for excluded letters
     excluded_letters = st.text_input("Enter letters that are not in the word:")
 
-    # Check if any excluded letter is present in the incomplete word
-    if any(letter in incomplete_word for letter in excluded_letters):
-        st.error("You cannot exclude letters that are already part of the word!")
+    # Validate if any excluded letters are already used in the word
+    if st.button("Check Word"):
+        entered_word = "".join([char if char != "" else "_" for char in placeholders]).lower()
+        excluded_set = set(excluded_letters.lower())
+        duplicate_error = False
+        for char in entered_word:
+            if char in excluded_set:
+                duplicate_error = True
+                break
 
-    if st.button("Find Possible Words"):
-        model = WordCompletionModel()
-        possible_words = model.complete_word(incomplete_word.lower(), set(excluded_letters.lower()))
-
-        if possible_words:
-            st.write("Possible words:")
-            st.write(possible_words)
+        if duplicate_error:
+            st.error("Error: You have entered a letter in the excluded list that is already used in the word!")
         else:
-            st.write("No possible words found for your input.")
+            # Run the model to find possible completions
+            model = WordCompletionModel(all_words)
+            possible_words = model.complete_word(entered_word, excluded_set)
+
+            if possible_words:
+                st.write("Possible words:")
+                st.write(possible_words)
+            else:
+                st.write("No possible words found for your input.")
