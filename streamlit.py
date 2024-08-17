@@ -1,7 +1,3 @@
-!pip install PyPDF2
-!pip install nltk
-!pip install pdfplumber
-
 # Import necessary libraries
 import pdfplumber
 import nltk
