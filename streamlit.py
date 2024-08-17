@@ -15,31 +15,37 @@ with st.sidebar:
     # Title in sidebar
     st.markdown("<h2 style='color: #FF5733;'>Hangman Word Guesser</h2>", unsafe_allow_html=True)
     
-    # Image related to AI and word generation
-    ai_image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Artificial_intelligence-icon.svg/1024px-Artificial_intelligence-icon.svg.png"
+    # Updated image related to word guessing
+    ai_image_url = "https://upload.wikimedia.org/wikipedia/commons/4/46/Circle-icons-typography.svg"
     st.image(ai_image_url, caption="AI-Powered Word Guesser", use_column_width=True)
     
     # App description
     st.write("This Hangman Word Guesser helps you find possible words based on known and excluded letters, along with word details such as meanings, antonyms, and translations. It's a useful tool for word games and language learning.")
     
-    # Built by Gautham Mahadevan
-    st.markdown("<h3 style='color: #FF5733;'>This app was built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
+    # Credits
+    st.markdown("<h3 style='color: #FF5733;'>Built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
     
-    # Social links with updated icons
+    # Social links with separate lines and text
+    st.write("GitHub:")
     st.markdown("""
-    <div style='text-align: left;'>
-        <a href='https://github.com/gauthamgtg' target='_blank'>
-            <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='30' style='margin: 0 15px;' alt='GitHub'>
-        </a>
-        <a href='https://gauthamgtg.github.io/portfolio/' target='_blank'>
-            <img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Deepin_Icon_Theme_%E2%80%93_dde-file-manager_%284%29.svg' width='30' style='margin: 0 15px;' alt='Projects'>
-        </a>
-        <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank'>
-            <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='30' style='margin: 0 15px;' alt='LinkedIn'>
-        </a>
-    </div>
+    <a href='https://github.com/gauthamgtg' target='_blank'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='30' alt='GitHub'>
+    </a>
     """, unsafe_allow_html=True)
-
+    
+    st.write("Portfolio:")
+    st.markdown("""
+    <a href='https://gauthamgtg.github.io/portfolio/' target='_blank'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Deepin_Icon_Theme_%E2%80%93_dde-file-manager_%284%29.svg' width='30' alt='Projects'>
+    </a>
+    """, unsafe_allow_html=True)
+    
+    st.write("Follow on LinkedIn:")
+    st.markdown("""
+    <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='30' alt='LinkedIn'>
+    </a>
+    """, unsafe_allow_html=True)
 
 # Main content
 # Initialize word set
