@@ -25,21 +25,21 @@ with st.sidebar:
     st.markdown("<h3 style='color: #FF5733;'>Built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
     
     # Social links with text and icons side by side
-    st.write("GitHub:", unsafe_allow_html=True)
+    st.write("GitHub: ", unsafe_allow_html=True)
     st.markdown("""
     <a href='https://github.com/gauthamgtg' target='_blank'>
         <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='30' alt='GitHub'>
     </a>
     """, unsafe_allow_html=True)
     
-    st.write("Portfolio:", unsafe_allow_html=True)
+    st.write("Portfolio: ", unsafe_allow_html=True)
     st.markdown("""
     <a href='https://gauthamgtg.github.io/portfolio/' target='_blank'>
         <img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Deepin_Icon_Theme_%E2%80%93_dde-file-manager_%284%29.svg' width='30' alt='Projects'>
     </a>
     """, unsafe_allow_html=True)
     
-    st.write("For suggestions and feedbacks hit me up on LinkedIn: ", unsafe_allow_html=True)
+    st.write("For suggestions and feedback hit me up on LinkedIn: ", unsafe_allow_html=True)
     st.markdown("""
     <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank'>
         <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='30' alt='LinkedIn'>
@@ -107,13 +107,15 @@ with col2:
         st.session_state.possible_words = []
         st.session_state.selected_word = ""
 
-# Display possible words as pill boxes with links
+# Display possible words as pill boxes side by side
 if st.session_state.possible_words:
-    st.markdown("<h4 style='color: #28a745;'>Possible words: </h4> <h6><span style='color: #FF5733;'>Click the word to see the word details</span></h6>", unsafe_allow_html=True)
+    st.markdown("<h4 style='color: #28a745;'>Possible words: <span style='color: #FF5733;'>Click the word to see the word details</span></h4>", unsafe_allow_html=True)
     num_words = len(st.session_state.possible_words)
-    cols = st.columns(num_words)
+    
+    # Create a horizontal layout using columns
+    cols = st.columns(min(num_words, 5))  # Adjust the number of columns if needed
     for i, word in enumerate(st.session_state.possible_words):
-        with cols[i]:
+        with cols[i % len(cols)]:  # Distribute words across the available columns
             if st.button(word, key=f"word_{i}"):
                 st.session_state.selected_word = word
 
