@@ -99,6 +99,8 @@ with col1:
                 )
             ]
             st.session_state.selected_word = ""
+            # Clear selected word from URL
+            st.experimental_set_query_params(word=None)
 
 with col2:
     if st.button("Reset"):
@@ -106,6 +108,8 @@ with col2:
         st.session_state.excluded_letters = []
         st.session_state.possible_words = []
         st.session_state.selected_word = ""
+        # Clear selected word from URL
+        st.experimental_set_query_params(word=None)
 
 # Display possible words as pill boxes with hyperlinks
 if st.session_state.possible_words:
@@ -115,57 +119,56 @@ if st.session_state.possible_words:
         with cols[i]:
             st.markdown(f"<a href='?word={word}'><span style='display: inline-block; background-color: #FF5733; padding: 5px 15px; margin: 5px; border-radius: 15px; color: white;'>{word}</span></a>", unsafe_allow_html=True)
 
-    # When a word is clicked, set it as the selected word
-    selected_word_param = st.experimental_get_query_params().get('word')
-    if selected_word_param:
-        st.session_state.selected_word = selected_word_param[0]
+# Show word details if a word is selected
+selected_word_param = st.experimental_get_query_params().get('word')
+if selected_word_param:
+    st.session_state.selected_word = selected_word_param[0]
 
-    # Show word details when a word is clicked
-    if st.session_state.selected_word:
-        st.markdown(f"### Details for the word '{st.session_state.selected_word}':")
-        
-        # Get and display meaning
-        meaning = dictionary.meaning(st.session_state.selected_word)
-        if meaning:
-            st.write("**Meaning:**")
-            for part_of_speech, definitions in meaning.items():
-                st.write(f"**{part_of_speech.capitalize()}:**")
-                for definition in definitions:
-                    st.write(f" - {definition}")
+if st.session_state.selected_word:
+    st.markdown(f"### Details for the word '{st.session_state.selected_word}':")
+    
+    # Get and display meaning
+    meaning = dictionary.meaning(st.session_state.selected_word)
+    if meaning:
+        st.write("**Meaning:**")
+        for part_of_speech, definitions in meaning.items():
+            st.write(f"**{part_of_speech.capitalize()}:**")
+            for definition in definitions:
+                st.write(f" - {definition}")
+    else:
+        st.write("No meaning found.")
+    
+    # Get and display antonyms
+    antonyms = dictionary.antonym(st.session_state.selected_word)
+    if antonyms:
+        st.write("**Opposites (Antonyms):**")
+        st.write(", ".join(antonyms))
+    else:
+        st.write("No antonyms found.")
+    
+    # Get and display translation
+    st.write("**Translation:**")
+    target_language = st.selectbox("Select target language:", [
+        'French', 'German', 'Italian', 'Spanish', 'Portuguese', 'Dutch', 'Chinese', 'Japanese', 'Korean', 'Russian', 'Arabic'
+    ])
+    
+    language_codes = {
+        'French': 'fr',
+        'German': 'de',
+        'Italian': 'it',
+        'Spanish': 'es',
+        'Portuguese': 'pt',
+        'Dutch': 'nl',
+        'Chinese': 'zh',
+        'Japanese': 'ja',
+        'Korean': 'ko',
+        'Russian': 'ru',
+        'Arabic': 'ar'
+    }
+    
+    if target_language:
+        translation = dictionary.translate(st.session_state.selected_word, language_codes[target_language])
+        if translation:
+            st.write(f"**{target_language} Translation:** {translation}")
         else:
-            st.write("No meaning found.")
-        
-        # Get and display antonyms
-        antonyms = dictionary.antonym(st.session_state.selected_word)
-        if antonyms:
-            st.write("**Opposites (Antonyms):**")
-            st.write(", ".join(antonyms))
-        else:
-            st.write("No antonyms found.")
-        
-        # Get and display translation
-        st.write("**Translation:**")
-        target_language = st.selectbox("Select target language:", [
-            'French', 'German', 'Italian', 'Spanish', 'Portuguese', 'Dutch', 'Chinese', 'Japanese', 'Korean', 'Russian', 'Arabic'
-        ])
-        
-        language_codes = {
-            'French': 'fr',
-            'German': 'de',
-            'Italian': 'it',
-            'Spanish': 'es',
-            'Portuguese': 'pt',
-            'Dutch': 'nl',
-            'Chinese': 'zh',
-            'Japanese': 'ja',
-            'Korean': 'ko',
-            'Russian': 'ru',
-            'Arabic': 'ar'
-        }
-        
-        if target_language:
-            translation = dictionary.translate(st.session_state.selected_word, language_codes[target_language])
-            if translation:
-                st.write(f"**{target_language} Translation:** {translation}")
-            else:
-                st.write("No translation found.")
+            st.write("No translation found.")
