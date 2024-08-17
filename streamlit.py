@@ -124,7 +124,7 @@ if st.session_state.selected_word:
     if st.button("Show Word Details"):
         st.session_state.show_word_details = True
 
-# Display details for the selected word
+# Display details for the selected word only when the button is clicked
 if st.session_state.show_word_details and st.session_state.selected_word:
     st.markdown(f"### Details for the word '{st.session_state.selected_word}':")
     
