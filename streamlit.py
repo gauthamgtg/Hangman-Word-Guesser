@@ -1,3 +1,5 @@
+pip install -r requirements.txt
+
 # Import necessary libraries
 import pdfplumber
 import nltk
