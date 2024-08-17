@@ -16,7 +16,7 @@ st.markdown("""
         <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='40' style='margin: 0 15px;' alt='GitHub'>
     </a>
     <a href='https://gauthamgtg.github.io/portfolio/' target='_blank'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/8/8e/Forge_Noun_project_1044767.svg' width='40' style='margin: 0 15px;' alt='Projects'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Deepin_Icon_Theme_%E2%80%93_dde-file-manager_%284%29.svg' width='40' style='margin: 0 15px;' alt='Projects'>
     </a>
     <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank'>
         <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='40' style='margin: 0 15px;' alt='LinkedIn'>
@@ -49,6 +49,8 @@ if 'excluded_letters' not in st.session_state:
     st.session_state.excluded_letters = []
 if 'selected_word' not in st.session_state:
     st.session_state.selected_word = ""
+if 'show_word_details' not in st.session_state:
+    st.session_state.show_word_details = False
 
 # Update session state if word length changes
 if len(st.session_state.letter_inputs) != word_length:
@@ -83,6 +85,7 @@ with col1:
                 st.write(possible_words)
                 # Let the user select a word from the possible words
                 st.session_state.selected_word = st.selectbox("Select a word for details:", possible_words)
+                st.session_state.show_word_details = False  # Reset the details view until user clicks the button
             else:
                 st.markdown("<h4 style='color: #dc3545;'>No possible words found for your input.</h4>", unsafe_allow_html=True)
 
@@ -91,10 +94,16 @@ with col2:
         st.session_state.letter_inputs = [""] * word_length
         st.session_state.excluded_letters = []
         st.session_state.selected_word = ""
+        st.session_state.show_word_details = False
         st.experimental_set_query_params()  # Reset query parameters
 
-# Display details for the selected word
+# Button to show details of the selected word
 if st.session_state.selected_word:
+    if st.button("Show Word Details"):
+        st.session_state.show_word_details = True
+
+# Display details for the selected word
+if st.session_state.show_word_details and st.session_state.selected_word:
     st.markdown(f"### Details for the word '{st.session_state.selected_word}':")
     
     # Get meaning
