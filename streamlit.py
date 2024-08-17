@@ -106,9 +106,12 @@ with col1:
 
             if st.session_state.possible_words:
                 st.markdown("<h4 style='color: #28a745;'>Possible words:</h4>", unsafe_allow_html=True)
-                st.write(st.session_state.possible_words)
-                # Let the user select a word from the possible words
-                st.session_state.selected_word = st.selectbox("Select a word for details:", st.session_state.possible_words, key='word_selection')
+                st.session_state.selected_word = st.selectbox(
+                    "Select a word for details:",
+                    st.session_state.possible_words,
+                    index=0,  # Ensure the first word is selected by default
+                    key='word_selection'
+                )
                 st.session_state.show_word_details = False  # Reset the details view until user clicks the button
             else:
                 st.markdown("<h4 style='color: #dc3545;'>No possible words found for your input.</h4>", unsafe_allow_html=True)
