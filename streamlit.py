@@ -9,13 +9,13 @@ st.markdown("<h1 style='text-align: center; color: #FF5733;'>Hangman Word Guesse
 st.markdown("""
 <div style='text-align: center;'>
     <a href='https://github.com/gauthamgtg' target='_blank'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='40' style='margin: 0 15px;'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='40' style='margin: 0 15px;' alt='GitHub'>
     </a>
     <a href='https://gauthamgtg.github.io/portfolio/' target='_blank'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/2/24/Font_Awesome_5_solid_project_diagram.svg' width='40' style='margin: 0 15px;'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/8/8e/Forge_Noun_project_1044767.svg' width='40' style='margin: 0 15px;' alt='Projects'>
     </a>
     <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/c/c9/LinkedIn_logo_initials.png' width='40' style='margin: 0 15px;'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='40' style='margin: 0 15px;' alt='LinkedIn'>
     </a>
 </div>
 """, unsafe_allow_html=True)
@@ -52,7 +52,9 @@ if len(st.session_state.letter_inputs) != word_length:
 st.markdown("<h4 style='color: #33CFFF;'>Enter the known letters below:</h4>", unsafe_allow_html=True)
 cols = st.columns(word_length)
 for i in range(word_length):
-    st.session_state.letter_inputs[i] = cols[i].text_input(f"Letter {i+1}", st.session_state.letter_inputs[i], max_chars=1, key=f"letter_{i}")
+    st.session_state.letter_inputs[i] = cols[i].text_input(
+        f"Letter {i+1}", st.session_state.letter_inputs[i], max_chars=1, key=f"letter_{i}"
+    ).upper()  # Convert input to uppercase
 
 # User input for excluded letters
 st.markdown("<h4 style='color: #33CFFF;'>Enter letters that are not in the word:</h4>", unsafe_allow_html=True)
@@ -67,7 +69,7 @@ with col1:
             pattern = "".join([letter if letter else "_" for letter in st.session_state.letter_inputs])
             # Word guessing logic
             possible_words = [word for word in web2lowerset if len(word) == word_length and all(
-                (c1 == c2 or c2 == "_") and c1 not in st.session_state.excluded_letters for c1, c2 in zip(word, pattern)
+                (c1.upper() == c2 or c2 == "_") and c1.upper() not in st.session_state.excluded_letters for c1, c2 in zip(word, pattern)
             )]
 
             if possible_words:
@@ -81,4 +83,5 @@ with col2:
         st.session_state.letter_inputs = [""] * word_length
         st.session_state.excluded_letters = []
         st.session_state.word_length = word_length
+        # Clear all inputs manually
         st.experimental_set_query_params()  # Reset query parameters
