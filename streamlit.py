@@ -80,4 +80,5 @@ with col2:
     if st.button("Reset"):
         st.session_state.letter_inputs = [""] * word_length
         st.session_state.excluded_letters = []
-        st.experimental_rerun()
+        st.session_state.word_length = word_length
+        st.experimental_set_query_params()  # Reset query parameters
