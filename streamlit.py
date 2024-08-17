@@ -9,23 +9,27 @@ dictionary = PyDictionary()
 st.set_page_config(page_title="Hangman Word Guesser", layout="centered")
 st.markdown("<h1 style='text-align: center; color: #FF5733;'>Hangman Word Guesser</h1>", unsafe_allow_html=True)
 
-# Display social links with updated icons
-st.markdown("""
-<div style='text-align: center;'>
-    <a href='https://github.com/gauthamgtg' target='_blank'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='40' style='margin: 0 15px;' alt='GitHub'>
-    </a>
-    <a href='https://gauthamgtg.github.io/portfolio/' target='_blank'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Deepin_Icon_Theme_%E2%80%93_dde-file-manager_%284%29.svg' width='40' style='margin: 0 15px;' alt='Projects'>
-    </a>
-    <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='40' style='margin: 0 15px;' alt='LinkedIn'>
-    </a>
-</div>
-""", unsafe_allow_html=True)
+# Sidebar content
+with st.sidebar:
+    st.markdown("<h3 style='color: #FF5733;'>This app was built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
+    st.write("This Hangman Word Guesser helps you find possible words based on known and excluded letters, along with word details such as meanings, antonyms, and translations. It's a useful tool for word games and language learning.")
+    
+    # Display social links with updated icons in the sidebar
+    st.markdown("""
+    <div style='text-align: left;'>
+        <a href='https://github.com/gauthamgtg' target='_blank'>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='30' style='margin: 0 15px;' alt='GitHub'>
+        </a>
+        <a href='https://gauthamgtg.github.io/portfolio/' target='_blank'>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Deepin_Icon_Theme_%E2%80%93_dde-file-manager_%284%29.svg' width='30' style='margin: 0 15px;' alt='Projects'>
+        </a>
+        <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank'>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='30' style='margin: 0 15px;' alt='LinkedIn'>
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
 
-st.markdown("<h6 style='text-align: center; color: #FF5733;'>This app was built by Gautham Mahadevan</h6>", unsafe_allow_html=True)
-
+# Main content
 # Initialize word set
 web2lowerset = get_english_words_set(['web2'], lower=True)
 
