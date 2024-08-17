@@ -1,0 +1,32 @@
+import pdfplumber
+import nltk
+from nltk.tokenize import word_tokenize
+import pickle
+
+# Download NLTK resources if not already downloaded
+nltk.download('punkt')
+nltk.download('words')
+
+# Path to your PDF file
+file_name = 'dictionary.pdf'  # Replace with the path to your PDF file
+
+# Initialize an empty list to store all words
+all_words = []
+
+# Process the PDF
+with pdfplumber.open(file_name) as pdf:
+    for page in pdf.pages:
+        text = page.extract_text()
+        if text:
+            words = word_tokenize(text)
+            words = [word.lower() for word in words if word.isalpha()]
+            all_words.extend(words)
+
+# Combine the NLTK word list with the extracted words
+all_words = list(set(nltk.corpus.words.words() + all_words))
+
+# Save the word list to a file using pickle
+with open('word_list.pkl', 'wb') as f:
+    pickle.dump(all_words, f)
+
+print("Word list saved to 'word_list.pkl'")
