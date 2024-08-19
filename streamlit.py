@@ -51,7 +51,7 @@ with st.sidebar:
         unsafe_allow_html=True
     )
 
-     st.markdown(
+    st.markdown(
         """
         <div style="display: flex; align-items: center;">
             <p style="margin: 0;">Portfolio: </p>
