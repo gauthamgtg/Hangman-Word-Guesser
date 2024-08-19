@@ -47,10 +47,11 @@ with st.sidebar:
                 <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='30' alt='GitHub'>
             </a>
         </div>
+        <br>
         """,
         unsafe_allow_html=True
     )
-    <br>
+    
     st.markdown(
         """
         <div style="display: flex; align-items: center;">
@@ -59,6 +60,7 @@ with st.sidebar:
                 <img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Deepin_Icon_Theme_%E2%80%93_dde-file-manager_%284%29.svg' width='30' alt='Projects'>
             </a>
         </div>
+        <br>
         """,
         unsafe_allow_html=True
     )
@@ -71,6 +73,7 @@ with st.sidebar:
                 <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='30' alt='LinkedIn'>
             </a>
         </div>
+        <br>
         """,
         unsafe_allow_html=True
     )
