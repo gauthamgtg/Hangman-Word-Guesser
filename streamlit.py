@@ -50,7 +50,7 @@ with st.sidebar:
         """,
         unsafe_allow_html=True
     )
-
+    <br>
     st.markdown(
         """
         <div style="display: flex; align-items: center;">
@@ -62,7 +62,7 @@ with st.sidebar:
         """,
         unsafe_allow_html=True
     )
-            
+    <br>      
     st.markdown(
         """
         <div style="display: flex; align-items: center;">
