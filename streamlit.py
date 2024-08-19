@@ -16,7 +16,7 @@ with st.sidebar:
     
     # Updated image related to word guessing
     ai_image_url = "https://upload.wikimedia.org/wikipedia/commons/4/46/Circle-icons-typography.svg"
-    st.image(ai_image_url, caption="AI-Powered Word Guesser", use_column_width=True)
+    st.image(ai_image_url, caption="AI-Powered Word Guesser", use_column_width=False)
     
     # App description
     st.write("This Hangman Word Guesser helps you find possible words based on known and excluded letters, along with word details such as meanings, antonyms, and translations. It's a useful tool for word games and language learning.")
