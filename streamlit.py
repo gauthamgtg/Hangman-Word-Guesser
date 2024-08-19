@@ -32,12 +32,25 @@ with st.sidebar:
     st.markdown("<h3 style='color: #FF5733;'>Built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
     
     # Social links with text and icons side by side
-    st.write("GitHub: ", unsafe_allow_html=True)
-    st.markdown("""
-    <a href='https://github.com/gauthamgtg' target='_blank'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='30' alt='GitHub'>
-    </a>
-    """, unsafe_allow_html=True)
+    # st.write("GitHub: ", unsafe_allow_html=True)
+    # st.markdown("""
+    # <a href='https://github.com/gauthamgtg' target='_blank'>
+    #     <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='30' alt='GitHub'>
+    # </a>
+    # """, unsafe_allow_html=True)
+
+    st.markdown(
+        """
+        <div style="display: flex; align-items: center;">
+            <p style="margin: 0;">GitHub: </p>
+            <a href='https://github.com/gauthamgtg' target='_blank' style="margin-left: 5px;">
+                <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='30' alt='GitHub'>
+            </a>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
     
     st.write("Portfolio: ", unsafe_allow_html=True)
     st.markdown("""
