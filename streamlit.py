@@ -1,6 +1,23 @@
 import streamlit as st
 from english_words import get_english_words_set
 from PyDictionary import PyDictionary
+import streamlit as st
+import streamlit.components.v1 as components
+
+# Set page configuration and title
+st.set_page_config(page_title="Hangman Word Guesser", layout="centered")
+
+# Inject PostHog analytics script
+posthog_script = """
+<!-- PostHog Analytics Script -->
+<script>
+    !function(t,e){var o,n,p,r;t.__posthog||(o=t.__posthog=function(){o.queue.push(arguments)},o.queue=[],o.t=1*new Date,(n=e.createElement("script")).type="text/javascript",n.async=!0,n.src="https://t.posthog.com/library.js",(p=e.getElementsByTagName("script")[0]).parentNode.insertBefore(n,p))}(window,document),
+    posthog.init('YOUR_POSTHOG_PROJECT_API_KEY', {api_host: 'https://app.posthog.com'})
+</script>
+"""
+
+# Display the PostHog script in the Streamlit app
+components.html(posthog_script, height=0, width=0)
 
 # Initialize PyDictionary
 dictionary = PyDictionary()
