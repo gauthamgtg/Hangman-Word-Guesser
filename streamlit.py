@@ -39,27 +39,44 @@ with st.sidebar:
     # Credits
     st.markdown("<h3 style='color: #FF5733;'>Built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
     
-    # Social links with text and icons side by side
-    st.write("GitHub: ", unsafe_allow_html=True)
-    st.markdown("""
-    <a href='https://github.com/gauthamgtg' target='_blank'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='30' alt='GitHub'>
-    </a>
-    """, unsafe_allow_html=True)
+     st.markdown(
+            """
+            <div style="display: flex; align-items: center;">
+                <p style="margin: 0;">GitHub: </p>
+                <a href='https://github.com/gauthamgtg' target='_blank' style="margin-left: 5px;">
+                    <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='30' alt='GitHub'>
+                </a>
+            </div>
+            <br>
+            """,
+            unsafe_allow_html=True
+        )
+        
+    st.markdown(
+        """
+        <div style="display: flex; align-items: center;">
+            <p style="margin: 0;">Portfolio: </p>
+            <a href='https://gauthamgtg.github.io/portfolio/' target='_blank' style="margin-left: 5px;">
+                <img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Deepin_Icon_Theme_%E2%80%93_dde-file-manager_%284%29.svg' width='30' alt='Projects'>
+            </a>
+        </div>
+        <br>
+        """,
+        unsafe_allow_html=True
+    )
     
-    st.write("Portfolio: ", unsafe_allow_html=True)
-    st.markdown("""
-    <a href='https://gauthamgtg.github.io/portfolio/' target='_blank'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Deepin_Icon_Theme_%E2%80%93_dde-file-manager_%284%29.svg' width='30' alt='Projects'>
-    </a>
-    """, unsafe_allow_html=True)
-    
-    st.write("For suggestions and feedback hit me up on LinkedIn: ", unsafe_allow_html=True)
-    st.markdown("""
-    <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='30' alt='LinkedIn'>
-    </a>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div style="display: flex; align-items: center;">
+            <p style="margin: 0;">For feedbacks, hit me up on LinkedIn: </p>
+            <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank' style="margin-left: 5px;">
+                <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='30' alt='LinkedIn'>
+            </a>
+        </div>
+        <br>
+        """,
+        unsafe_allow_html=True
+    )
 
 # Main content
 web2lowerset = get_english_words_set(['web2'], lower=True)
