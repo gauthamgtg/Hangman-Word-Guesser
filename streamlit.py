@@ -11,7 +11,7 @@ st.markdown("<h1 style='text-align: center; color: #FF5733;'>Hangman Word Guesse
 
 with st.sidebar:
     # Title in sidebar
-    st.markdown("<h2 style='text-align: center;color: #FF5733;'>Hangman Word Guesser</h2>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;color: #FF5733;'>Hangman Word Guesser</h1>", unsafe_allow_html=True)
     st.markdown(
         """
         <div style="text-align: center;">
