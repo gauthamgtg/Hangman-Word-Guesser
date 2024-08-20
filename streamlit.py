@@ -24,7 +24,6 @@ components.html(posthog_script, height=0, width=0)
 dictionary = PyDictionary()
 
 # Set page configuration and title
-st.set_page_config(page_title="Hangman Word Guesser", layout="centered")
 st.markdown("<h1 style='text-align: center; color: #FF5733;'>Hangman Word Guesser</h1>", unsafe_allow_html=True)
 
 with st.sidebar:
