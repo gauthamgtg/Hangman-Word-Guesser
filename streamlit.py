@@ -11,7 +11,7 @@ st.markdown("<h1 style='text-align: center; color: #FF5733;'>Hangman Word Guesse
 
 with st.sidebar:
     # Title in sidebar
-    st.markdown("<h2 style='color: #FF5733;'>Hangman Word Guesser</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #FF5733;text-align: center;'>Hangman Word Guesser</h2>", unsafe_allow_html=True)
     
     # Updated image related to word guessing
     ai_image_url = "https://upload.wikimedia.org/wikipedia/commons/4/46/Circle-icons-typography.svg"
