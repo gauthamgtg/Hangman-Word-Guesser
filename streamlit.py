@@ -27,6 +27,17 @@ with st.sidebar:
     
     # App description
     st.write("This Hangman Word Guesser helps you find possible words based on known and excluded letters, along with word details such as meanings, antonyms, and translations. It's a useful tool for word games and language learning.")
+
+    # Tutorial section 
+    st.markdown("<h4 style='color: #33CFFF;'>How to Use the App:</h4>", unsafe_allow_html=True)
+    st.write("""
+    1. **Set the Word Length:** Use the slider to choose the number of letters in the word.
+    2. **Enter Known Letters:** Fill in the letters you know in the word. Leave empty spaces for unknown letters.
+    3. **Exclude Letters:** Input any letters that are definitely not in the word (e.g., letters guessed incorrectly).
+    4. **Click 'Check':** The app will generate a list of possible words based on your inputs.
+    5. **View Word Details:** Click on any word to see its meaning, antonyms, and translation options.
+    6. **Reset the App:** Use the 'Reset' button to clear your inputs and start a new word search.
+    """)
     
     # Credits
     st.markdown("<h3 style='color: #FF5733;'>Built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
