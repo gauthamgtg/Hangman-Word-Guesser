@@ -39,7 +39,7 @@ with st.sidebar:
     # Credits
     st.markdown("<h3 style='color: #FF5733;'>Built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
     
-     st.markdown(
+    st.markdown(
             """
             <div style="display: flex; align-items: center;">
                 <p style="margin: 0;">GitHub: </p>
