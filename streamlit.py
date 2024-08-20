@@ -16,7 +16,7 @@ with st.sidebar:
         """
         <div style="text-align: center;">
             <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Circle-icons-typography.svg" 
-                 alt="AI-Powered Word Guesser" style="width: 50%;">
+                 style="width: 50%;">
             <p>AI-Powered Word Guesser</p>
         </div>
         """,
