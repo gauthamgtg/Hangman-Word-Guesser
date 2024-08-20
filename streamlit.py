@@ -9,26 +9,18 @@ dictionary = PyDictionary()
 st.set_page_config(page_title="Hangman Word Guesser", layout="centered")
 st.markdown("<h1 style='text-align: center; color: #FF5733;'>Hangman Word Guesser</h1>", unsafe_allow_html=True)
 
-# Sidebar content
 with st.sidebar:
     # Title in sidebar
-    st.markdown("<h2 style='text-align: center;color: #FF5733;'>Hangman Word Guesser</h2>", unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div style="text-align: center;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Circle-icons-typography.svg" 
-                 alt="AI-Powered Word Guesser" style="width: 50%;">
-            <p>AI-Powered Word Guesser</p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
+    st.markdown("<h2 style='color: #FF5733;'>Hangman Word Guesser</h2>", unsafe_allow_html=True)
+    
+    # Updated image related to word guessing
+    ai_image_url = "https://upload.wikimedia.org/wikipedia/commons/4/46/Circle-icons-typography.svg"
+    st.image(ai_image_url, caption="AI-Powered Word Guesser", use_column_width=True)
     
     # App description
     st.write("This Hangman Word Guesser helps you find possible words based on known and excluded letters, along with word details such as meanings, antonyms, and translations. It's a useful tool for word games and language learning.")
-
-    # Tutorial section 
+    
+    # Tutorial section
     st.markdown("<h4 style='color: #33CFFF;'>How to Use the App:</h4>", unsafe_allow_html=True)
     st.write("""
     1. **Set the Word Length:** Use the slider to choose the number of letters in the word.
@@ -43,52 +35,26 @@ with st.sidebar:
     st.markdown("<h3 style='color: #FF5733;'>Built by Gautham Mahadevan</h3>", unsafe_allow_html=True)
     
     # Social links with text and icons side by side
-    # st.write("GitHub: ", unsafe_allow_html=True)
-    # st.markdown("""
-    # <a href='https://github.com/gauthamgtg' target='_blank'>
-    #     <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='30' alt='GitHub'>
-    # </a>
-    # """, unsafe_allow_html=True)
-
-    st.markdown(
-        """
-        <div style="display: flex; align-items: center;">
-            <p style="margin: 0;">GitHub: </p>
-            <a href='https://github.com/gauthamgtg' target='_blank' style="margin-left: 5px;">
-                <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='30' alt='GitHub'>
-            </a>
-        </div>
-        <br>
-        """,
-        unsafe_allow_html=True
-    )
+    st.write("GitHub: ", unsafe_allow_html=True)
+    st.markdown("""
+    <a href='https://github.com/gauthamgtg' target='_blank'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' width='30' alt='GitHub'>
+    </a>
+    """, unsafe_allow_html=True)
     
-    st.markdown(
-        """
-        <div style="display: flex; align-items: center;">
-            <p style="margin: 0;">Portfolio: </p>
-            <a href='https://gauthamgtg.github.io/portfolio/' target='_blank' style="margin-left: 5px;">
-                <img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Deepin_Icon_Theme_%E2%80%93_dde-file-manager_%284%29.svg' width='30' alt='Projects'>
-            </a>
-        </div>
-        <br>
-        """,
-        unsafe_allow_html=True
-    )
+    st.write("Portfolio: ", unsafe_allow_html=True)
+    st.markdown("""
+    <a href='https://gauthamgtg.github.io/portfolio/' target='_blank'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/6/69/Deepin_Icon_Theme_%E2%80%93_dde-file-manager_%284%29.svg' width='30' alt='Projects'>
+    </a>
+    """, unsafe_allow_html=True)
     
-    st.markdown(
-        """
-        <div style="display: flex; align-items: center;">
-            <p style="margin: 0;">For feedbacks, hit me up on LinkedIn: </p>
-            <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank' style="margin-left: 5px;">
-                <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='30' alt='LinkedIn'>
-            </a>
-        </div>
-        <br>
-        """,
-        unsafe_allow_html=True
-    )
-
+    st.write("For suggestions and feedback hit me up on LinkedIn: ", unsafe_allow_html=True)
+    st.markdown("""
+    <a href='https://linkedin.com/in/gautham-mahadevan' target='_blank'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width='30' alt='LinkedIn'>
+    </a>
+    """, unsafe_allow_html=True)
 
 # Main content
 web2lowerset = get_english_words_set(['web2'], lower=True)
