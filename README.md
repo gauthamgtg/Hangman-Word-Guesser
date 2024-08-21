@@ -1,4 +1,4 @@
-Interface : 
+Desktop Interface : 
 
 <img width="442" alt="image" src="https://github.com/user-attachments/assets/caf64c9f-c221-45f7-921f-0a6540b78aee">
 
